@@ -468,7 +468,7 @@ export default function XinmaoMatchPage() {
                             />
                             {reason.text}
                             {reason.isMaxMust && (
-                              <span className="ml-auto text-[10px] bg-black text-[#d4af37] px-1 font-black">
+                              <span className="ml-auto text-sm bg-black text-[#d4af37] px-2 py-0.5 font-black border border-[#d4af37]/30">
                                 PERFECT
                               </span>
                             )}

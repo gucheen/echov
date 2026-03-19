@@ -70,10 +70,10 @@ const CharacterCard = ({ character }: { character: Character }) => {
             onError={() => setImageError(true)}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-            <User className="w-16 h-16 text-slate-400 opacity-20" />
-            <span className="absolute bottom-4 text-sm text-slate-400 font-medium">
-              未找到头像
+          <div className="w-full h-full flex flex-col items-center justify-center bg-[#0f1115] border border-white/5">
+            <User className="w-16 h-16 text-slate-800 opacity-50" />
+            <span className="mt-4 text-sm text-slate-600 font-bold uppercase tracking-widest text-center px-4">
+              未找到头像存档
             </span>
           </div>
         )}
@@ -268,8 +268,8 @@ export default function CharactersPage() {
                 animate={{ opacity: 1 }}
                 className="text-center py-32 space-y-4"
               >
-                <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto">
-                  <Search className="w-8 h-8 text-slate-300" />
+                <div className="w-20 h-20 bg-slate-900 border border-white/5 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                  <Search className="w-8 h-8 text-slate-700" />
                 </div>
                 <div className="space-y-1">
                   <p className="text-xl font-black tracking-widest text-white uppercase">

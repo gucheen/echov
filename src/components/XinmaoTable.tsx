@@ -91,8 +91,10 @@ const AttributeCell = ({
                   return (
                     <div
                       key={j}
-                      className={`flex justify-between items-center border-b border-slate-50 pb-1 ${
-                        currentLevel !== 'none' ? 'bg-slate-50/50 -mx-1 px-1 rounded' : ''
+                      className={`flex justify-between items-center border-b border-white/5 pb-1 ${
+                        currentLevel !== "none"
+                          ? "bg-white/5 -mx-1 px-1 rounded-none border-x border-[#d4af37]/20"
+                          : ""
                       }`}
                     >
                       <div className="flex items-center gap-2">
@@ -158,10 +160,12 @@ const SkillCell = ({
                   <div
                     key={j}
                     className={`p-2 border transition-all rounded-none ${
-                      currentLevel === 'required' ? 'border-[#d4af37]/50 bg-[#d4af37]/5 shadow-[inset_0_0_10px_rgba(212,175,55,0.1)]' : 
-                      currentLevel === 'priority' ? 'border-slate-500/50 bg-slate-500/5' : 
-                      'border-slate-800 bg-[#16191e]'
-                    }`}
+                        currentLevel === "required"
+                          ? "border-[#d4af37]/50 bg-[#d4af37]/5 shadow-[inset_0_0_10px_rgba(212,175,55,0.1)]"
+                          : currentLevel === "priority"
+                            ? "border-slate-600 bg-white/5"
+                            : "border-slate-800 bg-[#16191e]"
+                      }`}
                   >
                     <div className="flex items-center justify-between mb-1">
                       <div className="text-sm font-black tracking-tight text-white uppercase">
@@ -320,8 +324,8 @@ export default function XinmaoTable({
 
         {filteredItems.length === 0 && (
           <div className="py-24 text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-100 mb-4">
-              <Search className="w-8 h-8 text-slate-300" />
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-900 border border-white/5 mb-4 shadow-inner">
+              <Search className="w-8 h-8 text-slate-700" />
             </div>
             <p className="text-slate-500 font-medium">
               未找到符合搜索条件的项目。
