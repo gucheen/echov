@@ -2,61 +2,93 @@
 @config "../tailwind.config.cjs";
 
 :root {
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.3);
-  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-}
-
-.dark {
-  --glass-bg: rgba(17, 24, 39, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --deep-bg: #0f1115;
+  --panel-bg: #1a1d23;
+  --gold-primary: #d4af37;
+  --gold-dark: #b8860b;
+  --gold-glow: rgba(212, 175, 55, 0.2);
+  --metal-silver: #a0a0a0;
+  --metal-border: #404040;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
 }
 
 body {
-  @apply bg-slate-50 text-slate-900 min-h-screen overflow-x-hidden;
-  font-family: 'Outfit', sans-serif;
-  background: radial-gradient(circle at top left, #f3f4f6, #e5e7eb);
+  @apply bg-[#0f1115] text-[#e2e8f0] min-h-screen overflow-x-hidden;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-image: 
+    radial-gradient(circle at 50% 0%, #1c1f26 0%, #0f1115 70%),
+    linear-gradient(rgba(212, 175, 55, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
 }
 
 @layer utilities {
   .glass {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    background: rgba(26, 29, 35, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--metal-border);
+    @apply rounded-none;
   }
 
   .glass-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
-    @apply rounded-2xl transition-all duration-300;
+    background: rgba(26, 29, 35, 0.6);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--metal-border);
+    @apply rounded-none transition-all duration-200;
   }
 
   .glass-card:hover {
-    @apply -translate-y-1 shadow-2xl;
-    background: rgba(255, 255, 255, 0.8);
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 15px var(--gold-glow);
+    background: rgba(30, 35, 42, 0.8);
   }
-}
 
-@layer utilities {
+  .metal-panel {
+    background: linear-gradient(135deg, #1a1d23 0%, #252a31 100%);
+    border: 1px solid var(--metal-border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metal-panel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  }
+
+  .text-gold {
+    @apply text-[#d4af37];
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+  }
+
+  .border-gold {
+    border-color: var(--gold-primary);
+  }
+
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-indigo-600;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#d4af37] via-[#f4d03f] to-[#b8860b];
   }
 }
 
-/* Custom scrollbar */
+/* Industrial scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  @apply bg-[#0a0c10];
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 rounded-full hover:bg-slate-400 transition-colors;
+  @apply bg-[#333] hover:bg-[#444] transition-colors border-2 border-[#0a0c10];
+}
+
+/* Utility to remove rounding */
+.rounded-xl, .rounded-2xl, .rounded-3xl, .rounded-lg, .rounded-md {
+  border-radius: 0px !important;
 }

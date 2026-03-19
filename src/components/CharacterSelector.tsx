@@ -31,32 +31,35 @@ export default function CharacterSelector({ onSelect, selectedCharacter }: Chara
     <div className="relative w-full max-w-sm">
       <div 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm cursor-pointer flex justify-between items-center hover:border-primary-500 transition-all"
+        className="w-full px-4 py-3 bg-[#1a1d23] border border-slate-700 text-white cursor-pointer flex justify-between items-center hover:border-[#d4af37] transition-all group"
       >
-        <span className={selectedCharacter ? "text-slate-900 font-bold" : "text-slate-400"}>
+        <span className={selectedCharacter ? "text-[#d4af37] font-black uppercase tracking-wider" : "text-slate-500"}>
           {selectedCharacter || "选择角色标记心锚..."}
         </span>
-        <Search className="w-4 h-4 text-slate-400" />
+        <Search className="w-4 h-4 text-slate-500 group-hover:text-[#d4af37] transition-colors" />
+        
+        {/* Angular corner accent */}
+        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/10" />
       </div>
 
       {isOpen && (
-        <div className="absolute z-[60] mt-2 w-full bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-          <div className="p-2 border-b border-slate-100">
+        <div className="absolute z-[60] mt-1 w-full bg-[#1a1d23] border border-[#d4af37]/50 shadow-[0_10px_40px_rgba(0,0,0,0.5)] overflow-hidden">
+          <div className="p-2 border-b border-slate-800">
             <input
               type="text"
               placeholder="搜索角色..."
-              className="w-full px-3 py-2 bg-slate-50 border-none rounded-lg text-sm focus:ring-0 outline-none"
+              className="w-full px-3 py-2 bg-[#0f1115] border-none text-sm text-white focus:ring-0 outline-none placeholder:text-slate-600"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               autoFocus
             />
           </div>
-          <div className="max-h-60 overflow-y-auto p-1">
+          <div className="max-h-64 overflow-y-auto p-1 custom-scrollbar">
             <div 
               onClick={() => { onSelect(null); setIsOpen(false); }}
-              className="px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 rounded-lg cursor-pointer"
+              className="px-3 py-2 text-xs text-slate-500 hover:bg-white/5 cursor-pointer uppercase font-bold tracking-tighter"
             >
-              不选择角色 (None)
+              取消选择角色
             </div>
             {filteredCharacters.map((char) => (
               <div
@@ -65,17 +68,17 @@ export default function CharacterSelector({ onSelect, selectedCharacter }: Chara
                   onSelect(char.角色名);
                   setIsOpen(false);
                 }}
-                className={`px-3 py-2 text-sm rounded-lg cursor-pointer flex items-center gap-2 transition-colors ${
+                className={`px-3 py-3 text-sm cursor-pointer flex items-center gap-3 transition-colors border-b border-white/5 last:border-none ${
                   selectedCharacter === char.角色名 
-                    ? "bg-primary-50 text-primary-700 font-bold" 
-                    : "text-slate-700 hover:bg-slate-50"
+                    ? "bg-[#d4af37]/10 text-[#d4af37] font-bold" 
+                    : "text-slate-300 hover:bg-white/5"
                 }`}
               >
-                <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold">
+                <div className="w-7 h-7 bg-slate-800 flex items-center justify-center text-[10px] font-black border border-slate-700">
                   {char.角色名.charAt(0)}
                 </div>
-                {char.角色名}
-                <span className="ml-auto text-[10px] text-slate-400 px-1.5 py-0.5 bg-slate-100 rounded">
+                <span className="uppercase tracking-tight">{char.角色名}</span>
+                <span className="ml-auto text-[8px] text-slate-500 border border-slate-800 px-1.5 py-0.5 uppercase">
                   {char.星级[0]}
                 </span>
               </div>

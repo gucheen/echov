@@ -40,9 +40,9 @@ const CharacterCard = ({ character }: { character: Character }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.9 }}
       whileHover={{ y: -5 }}
-      className={cn("glass-card group overflow-hidden relative")}
+      className={cn("metal-panel group overflow-hidden relative border-t-2 border-t-slate-700")}
     >
-      <div className="aspect-[3/4] overflow-hidden bg-slate-200 relative">
+      <div className="aspect-[3/4] overflow-hidden bg-slate-900 relative">
         {!imageError ? (
           <img
             src={avatarUrl}
@@ -53,7 +53,7 @@ const CharacterCard = ({ character }: { character: Character }) => {
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
             <User className="w-16 h-16 text-slate-400 opacity-20" />
-            <span className="absolute bottom-4 text-xs text-slate-400 font-medium">Avatar Not Found</span>
+            <span className="absolute bottom-4 text-xs text-slate-400 font-medium">未找到头像</span>
           </div>
         )}
         
@@ -65,26 +65,29 @@ const CharacterCard = ({ character }: { character: Character }) => {
         </div>
       </div>
 
-      <div className="p-4 space-y-3">
+      <div className="p-4 space-y-3 bg-[#1a1d23]">
         <div className="flex items-start justify-between">
-          <h3 className="text-lg font-bold text-slate-800">{character.角色名}</h3>
-          <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-slate-100 text-slate-600">
+          <h3 className="text-lg font-black tracking-tight text-white uppercase">{character.角色名}</h3>
+          <div className="flex items-center gap-1.5 px-2 py-1 bg-slate-800 text-slate-300 border border-slate-700">
             <ProfessionIcon profession={character.职业[0]} />
-            <span className="text-xs font-semibold">{character.职业[0]}</span>
+            <span className="text-[10px] font-black uppercase">{character.职业[0]}</span>
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1.5">
           {character.功能?.slice(0, 3).map((tag: string, i: number) => (
-            <span key={i} className="text-[10px] px-2 py-0.5 rounded-md bg-primary-50 text-primary-600 font-medium border border-primary-100">
+            <span key={i} className="text-[9px] px-2 py-0.5 bg-[#d4af37]/5 text-[#d4af37] font-bold border border-[#d4af37]/20">
               {tag}
             </span>
           ))}
         </div>
       </div>
 
-      {/* Hover decoration */}
-      <div className="absolute inset-0 border-2 border-primary-500/0 group-hover:border-primary-500/10 rounded-2xl pointer-events-none transition-colors" />
+      {/* Industrial decoration */}
+      <div className="absolute top-0 right-0 w-8 h-8 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-[141%] h-[1px] bg-slate-700 rotate-45 transform origin-top-right opacity-50" />
+      </div>
+      <div className="absolute inset-0 border border-white/0 group-hover:border-[#d4af37]/30 pointer-events-none transition-colors" />
     </motion.div>
   );
 };
@@ -134,19 +137,20 @@ export default function CharactersPage() {
           transition={{ delay: 0.2 }}
           className="text-lg text-slate-500 max-w-2xl mx-auto"
         >
-          Explore and filter the comprehensive character database with ease.
+          轻松探索与筛选详尽的角色数据库。
         </motion.p>
       </header>
 
       {/* Controls Section */}
-      <section className="glass p-6 rounded-3xl mb-12 space-y-6">
+      <section className="bg-[#1a1d23] border border-[#404040] p-6 mb-12 space-y-6 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-slate-600 to-transparent opacity-30" />
         <div className="flex flex-col md:flex-row gap-4">
           <div className="relative flex-1 group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary-500 transition-colors" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-[#d4af37] transition-colors" />
             <input
               type="text"
-              placeholder="Search by name..."
-              className="w-full pl-12 pr-4 py-4 bg-white/50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+              placeholder="按名称搜索..."
+              className="w-full pl-12 pr-4 py-3 bg-[#0f1115] border border-[#404040] text-white focus:border-[#d4af37] outline-none transition-all placeholder:text-slate-600"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -155,30 +159,30 @@ export default function CharactersPage() {
           <div className="flex items-center gap-4">
             <div className="relative group">
               <select
-                className="appearance-none pl-4 pr-10 py-4 bg-white/50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary-500 outline-none cursor-pointer transition-all"
+                className="appearance-none pl-4 pr-10 py-3 bg-[#0f1115] border border-[#404040] text-slate-300 focus:border-[#d4af37] outline-none cursor-pointer transition-all"
                 value={selectedStar || ''}
                 onChange={(e) => setSelectedStar(e.target.value || null)}
               >
-                <option value="">All Stars</option>
+                <option value="">所有星级</option>
                 {stars.map((star: string) => (
                   <option key={star} value={star}>{star}</option>
                 ))}
               </select>
-              <Filter className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              <Filter className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-slate-500 pointer-events-none" />
             </div>
 
             <div className="relative group">
               <select
-                className="appearance-none pl-4 pr-10 py-4 bg-white/50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary-500 outline-none cursor-pointer transition-all"
+                className="appearance-none pl-4 pr-10 py-3 bg-[#0f1115] border border-[#404040] text-slate-300 focus:border-[#d4af37] outline-none cursor-pointer transition-all"
                 value={selectedProfession || ''}
                 onChange={(e) => setSelectedProfession(e.target.value || null)}
               >
-                <option value="">All Classes</option>
+                <option value="">所有职业</option>
                 {professions.map((prof: string) => (
                   <option key={prof} value={prof}>{prof}</option>
                 ))}
               </select>
-              <Filter className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              <Filter className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-slate-500 pointer-events-none" />
             </div>
           </div>
         </div>
@@ -189,15 +193,13 @@ export default function CharactersPage() {
         {loading ? (
           <div className="flex flex-col items-center justify-center py-32 space-y-4">
             <Loader2 className="w-12 h-12 text-primary-500 animate-spin" />
-            <p className="text-slate-400 font-medium">Decoding archive records...</p>
+            <p className="text-slate-400 font-medium">正在解析档案记录...</p>
           </div>
         ) : (
           <>
-            <div className="flex items-center justify-between mb-8 px-2">
               <h2 className="text-2xl font-bold text-slate-800">
-                {filteredCharacters.length} <span className="text-slate-400 font-medium">Characters Found</span>
+                找到 <span className="text-primary-600">{filteredCharacters.length}</span> 位角色
               </h2>
-            </div>
 
             <motion.div 
               layout
@@ -220,8 +222,8 @@ export default function CharactersPage() {
                   <Search className="w-8 h-8 text-slate-300" />
                 </div>
                 <div className="space-y-1">
-                  <p className="text-xl font-bold text-slate-800">No matches found</p>
-                  <p className="text-slate-500">Try adjusting your search or filters.</p>
+                  <p className="text-xl font-bold text-slate-800">未找到匹配项</p>
+                  <p className="text-slate-500">请尝试调整搜索内容或筛选条件。</p>
                 </div>
               </motion.div>
             )}

@@ -64,11 +64,12 @@ export default function XinmaoPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <header className="mb-12 text-center space-y-4">
-        <h1 className="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-6xl">
-          <span className="text-gradient">心锚</span> 数据库
+        <h1 className="text-5xl font-black tracking-widest text-[#d4af37] sm:text-6xl uppercase">
+          心锚 <span className="text-white opacity-20 font-light">DATABASE</span>
         </h1>
-        <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-          为角色标记推荐的心锚、词条与特性。 (Mark recommended Xinmao, attributes, and skills for characters.)
+        <div className="h-[1px] w-24 mx-auto bg-gradient-to-r from-transparent via-[#d4af37] to-transparent mb-4" />
+        <p className="text-sm tracking-widest text-slate-500 max-w-2xl mx-auto uppercase font-bold">
+          [ 授权访问 ] 为角色标记推荐的心锚、词条与特性
         </p>
       </header>
 

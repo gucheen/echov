@@ -13,31 +13,46 @@ const Navbar = () => {
   const location = useLocation();
   
   const navItems = [
-    { path: '/', name: 'Characters', icon: Users },
-    { path: '/xinmao', name: '心锚数据', icon: Database },
+    { path: '/', name: '角色档案', icon: Users },
+    { path: '/xinmao', name: '心锚数据库', icon: Database },
   ];
 
   return (
-    <nav className="sticky top-6 z-50 max-w-fit mx-auto bg-white/80 backdrop-blur-xl border border-white/20 shadow-lg rounded-2xl px-2 py-1.5 flex gap-1 mb-8">
-      {navItems.map((item) => {
-        const Icon = item.icon;
-        const isActive = location.pathname === item.path;
-        return (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={cn(
-              "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300",
-              isActive 
-                ? "bg-primary-500 text-white shadow-md shadow-primary-500/20" 
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-            )}
-          >
-            <Icon className={cn("w-4 h-4", isActive ? "text-white" : "text-slate-400")} />
-            {item.name}
-          </Link>
-        );
-      })}
+    <nav className="sticky top-0 z-50 w-full bg-[#1a1d23]/90 backdrop-blur-md border-b border-[#404040] shadow-2xl flex justify-center py-2 px-4 mb-12">
+      <div className="flex gap-4">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = location.pathname === item.path;
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={cn(
+                "group relative flex items-center gap-2 px-6 py-3 transition-all duration-300 border-x border-transparent",
+                isActive 
+                  ? "text-[#d4af37] bg-white/5 border-[#404040]" 
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
+              )}
+            >
+              <Icon className={cn("w-4 h-4 transition-transform group-hover:scale-110", isActive ? "text-[#d4af37]" : "text-slate-500")} />
+              <span className="text-sm font-black tracking-widest uppercase">{item.name}</span>
+              
+              {/* Gold indicator line */}
+              {isActive && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent shadow-[0_0_10px_#d4af37]" />
+              )}
+              
+              {/* Corner accents */}
+              {isActive && (
+                <>
+                  <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-[#d4af37]" />
+                  <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-[#d4af37]" />
+                </>
+              )}
+            </Link>
+          );
+        })}
+      </div>
     </nav>
   );
 };
@@ -57,7 +72,7 @@ export default function App() {
 
         {/* Footer */}
         <footer className="mt-12 text-center text-slate-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} 心锚 (Xinmao) Archive • Data from Local Records</p>
+          <p>&copy; {new Date().getFullYear()} 心锚 (Xinmao) 档案库 • 本地数据记录</p>
         </footer>
       </div>
     </Router>

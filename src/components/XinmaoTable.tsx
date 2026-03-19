@@ -38,9 +38,9 @@ const MarkingButton = ({
 }) => {
   const getStyles = () => {
     switch (level) {
-      case 'required': return "bg-rose-500 text-white border-rose-600 shadow-sm ring-2 ring-rose-500/20";
-      case 'priority': return "bg-amber-400 text-white border-amber-500 shadow-sm ring-2 ring-amber-500/20";
-      default: return "bg-slate-100 text-slate-400 border-slate-200 hover:bg-slate-200 hover:text-slate-600";
+      case 'required': return "bg-[#d4af37] text-black border-none shadow-[0_0_10px_rgba(212,175,55,0.4)]";
+      case 'priority': return "bg-slate-400 text-black border-none shadow-[0_0_10px_rgba(160,160,160,0.4)]";
+      default: return "bg-transparent text-slate-500 border border-slate-700 hover:border-slate-500 hover:text-slate-300";
     }
   };
 
@@ -56,7 +56,7 @@ const MarkingButton = ({
     <button
       onClick={(e) => { e.stopPropagation(); onClick(); }}
       title={title}
-      className={`px-2 py-0.5 rounded-full text-[9px] font-bold border transition-all duration-200 flex items-center justify-center min-w-[36px] ${getStyles()}`}
+      className={`px-2 py-0.5 rounded-none text-[9px] font-black uppercase transition-all duration-200 flex items-center justify-center min-w-[36px] ${getStyles()}`}
     >
       {getLabel()}
     </button>
@@ -157,10 +157,10 @@ const SkillCell = ({
                 return (
                   <div
                     key={j}
-                    className={`bg-slate-50 p-2 rounded-lg border transition-all ${
-                      currentLevel === 'required' ? 'border-red-300 bg-red-50/30' : 
-                      currentLevel === 'priority' ? 'border-orange-300 bg-orange-50/30' : 
-                      'border-slate-100'
+                    className={`p-2 border transition-all rounded-none ${
+                      currentLevel === 'required' ? 'border-[#d4af37]/50 bg-[#d4af37]/5 shadow-[inset_0_0_10px_rgba(212,175,55,0.1)]' : 
+                      currentLevel === 'priority' ? 'border-slate-500/50 bg-slate-500/5' : 
+                      'border-slate-800 bg-[#16191e]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -190,7 +190,7 @@ const SkillCell = ({
               })}
               {skillGroup.skills.length === 0 && (
                 <div className="text-xs text-slate-300 italic">
-                  No skills available
+                  暂无可用技能
                 </div>
               )}
             </div>
@@ -235,28 +235,29 @@ export default function XinmaoTable({
   return (
     <div className="space-y-6">
       <div className="relative group max-w-md mx-auto sm:mx-0">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary-500 transition-colors" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-[#d4af37] transition-colors" />
         <input
           type="text"
           placeholder="搜索项目名称..."
-          className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all shadow-sm"
+          className="w-full pl-12 pr-4 py-3 bg-[#1a1d23] border border-[#404040] text-white focus:border-[#d4af37] outline-none transition-all placeholder:text-slate-600"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-xl bg-white">
+      <div className="overflow-x-auto border border-[#404040] bg-[#1a1d23] shadow-2xl relative">
+        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#d4af37] via-transparent to-[#d4af37] opacity-50" />
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50/50 border-b border-slate-200">
-              <th className="px-6 py-4 text-sm font-bold text-slate-900 uppercase tracking-wider">
-                名称 (Name)
+            <tr className="bg-[#0f1115] border-b border-[#404040]">
+              <th className="px-6 py-5 text-[10px] font-black text-[#d4af37] uppercase tracking-[0.2em]">
+                名称
               </th>
-              <th className="px-6 py-4 text-sm font-bold text-slate-900 uppercase tracking-wider">
-                来源与属性 (Source & Attributes)
+              <th className="px-6 py-5 text-[10px] font-black text-[#d4af37] uppercase tracking-[0.2em]">
+                来源与属性
               </th>
-              <th className="px-6 py-4 text-sm font-bold text-slate-900 uppercase tracking-wider">
-                技能 (Skills)
+              <th className="px-6 py-5 text-[10px] font-black text-[#d4af37] uppercase tracking-[0.2em]">
+                技能
               </th>
             </tr>
           </thead>
@@ -266,21 +267,21 @@ export default function XinmaoTable({
               return (
                 <tr
                   key={index}
-                  className={`hover:bg-slate-50/30 transition-colors ${
-                    itemMarked ? 'bg-primary-50/20 shadow-inner' : ''
+                  className={`hover:bg-white/5 transition-colors border-b border-[#252a31] ${
+                    itemMarked ? 'bg-[#d4af37]/5' : ''
                   }`}
                 >
-                  <td className="px-6 py-8 align-top">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold relative ${
-                        itemMarked ? 'bg-primary-500 text-white shadow-lg' : 'bg-primary-100 text-primary-600'
+                  <td className="px-6 py-10 align-top">
+                    <div className="flex items-center gap-4">
+                      <div className={`w-12 h-12 flex items-center justify-center font-black relative border ${
+                        itemMarked ? 'bg-[#d4af37] text-black border-[#d4af37] shadow-[0_0_15px_rgba(212,175,55,0.3)]' : 'bg-slate-900 text-slate-500 border-slate-700'
                       }`}>
                         {item.name.charAt(0)}
                         {selectedCharacter && (
                           <button
                             onClick={() => onMark('attribute', item.name, 'ITEM_MARK', itemMarked ? 'none' : 'required' as any)}
-                            className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border border-white text-[8px] flex items-center justify-center ${
-                              itemMarked ? 'bg-red-500' : 'bg-slate-300 group-hover:bg-slate-400'
+                            className={`absolute -top-1.5 -right-1.5 w-5 h-5 border-2 border-[#1a1d23] text-[9px] flex items-center justify-center font-black ${
+                              itemMarked ? 'bg-black text-[#d4af37]' : 'bg-slate-700 text-slate-400'
                             }`}
                             title="标记此心锚"
                           >
@@ -288,7 +289,7 @@ export default function XinmaoTable({
                           </button>
                         )}
                       </div>
-                      <span className={`text-lg font-bold ${itemMarked ? 'text-primary-700' : 'text-slate-800'}`}>
+                      <span className={`text-lg font-black tracking-tight uppercase ${itemMarked ? 'text-[#d4af37]' : 'text-white'}`}>
                         {item.name}
                       </span>
                     </div>
@@ -323,7 +324,7 @@ export default function XinmaoTable({
               <Search className="w-8 h-8 text-slate-300" />
             </div>
             <p className="text-slate-500 font-medium">
-              No items found matching your search.
+              未找到符合搜索条件的项目。
             </p>
           </div>
         )}
