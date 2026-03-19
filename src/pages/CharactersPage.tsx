@@ -126,7 +126,7 @@ export default function CharactersPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-6xl"
         >
-          <span className="text-gradient">Echov</span> Archive
+          <span className="text-gradient">心锚</span> 档案 (Archive)
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0 }}

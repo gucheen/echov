@@ -14,7 +14,7 @@ const Navbar = () => {
   
   const navItems = [
     { path: '/', name: 'Characters', icon: Users },
-    { path: '/xinmao', name: 'Xinmao Data', icon: Database },
+    { path: '/xinmao', name: '心锚数据', icon: Database },
   ];
 
   return (
@@ -57,7 +57,7 @@ export default function App() {
 
         {/* Footer */}
         <footer className="mt-12 text-center text-slate-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} Echov Archive • Data from Local Records</p>
+          <p>&copy; {new Date().getFullYear()} 心锚 (Xinmao) Archive • Data from Local Records</p>
         </footer>
       </div>
     </Router>
