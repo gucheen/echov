@@ -56,7 +56,7 @@ const MarkingButton = ({
     <button
       onClick={(e) => { e.stopPropagation(); onClick(); }}
       title={title}
-      className={`px-2 py-0.5 rounded-none text-[9px] font-black uppercase transition-all duration-200 flex items-center justify-center min-w-[36px] ${getStyles()}`}
+      className={`px-3 py-1 rounded-none text-sm font-black uppercase transition-all duration-200 flex items-center justify-center min-w-[42px] ${getStyles()}`}
     >
       {getLabel()}
     </button>
@@ -81,9 +81,9 @@ const AttributeCell = ({
       {attributes.map((attr, i) => {
         const isRandom = attr.name.includes("随机词条");
         return (
-          <div key={i} className="text-xs">
-            <span className="font-semibold text-slate-700">{attr.name}: </span>
-            {attr.value && <span className="text-slate-600">{attr.value}</span>}
+          <div key={i} className="text-sm">
+            <span className="font-bold text-slate-300 text-sm">{attr.name}: </span>
+            {attr.value && <span className="text-slate-400 text-sm">{attr.value}</span>}
             {attr.attrs && (
               <div className="ml-2 mt-1 space-y-1">
                 {attr.attrs.map((subAttr, j) => {
@@ -110,11 +110,11 @@ const AttributeCell = ({
                             }}
                           />
                         )}
-                        <span className={`text-slate-500 ${currentLevel === 'required' ? 'font-bold text-red-600' : currentLevel === 'priority' ? 'font-bold text-orange-600' : ''}`}>
+                        <span className={`text-slate-400 text-sm ${currentLevel === 'required' ? 'font-black text-[#d4af37]' : currentLevel === 'priority' ? 'font-black text-slate-200' : ''}`}>
                           {subAttr.name}
                         </span>
                       </div>
-                      <span className="text-primary-600 font-medium">
+                      <span className="text-[#d4af37] font-black uppercase text-sm">
                         {subAttr.value}
                       </span>
                     </div>
@@ -148,7 +148,7 @@ const SkillCell = ({
         const isRandom = skillGroup.name.includes("随机特性");
         return (
           <div key={i} className="space-y-1">
-            <div className="text-[10px] uppercase tracking-wider font-bold text-slate-400">
+            <div className="text-sm uppercase tracking-[0.2em] font-black text-slate-500 mb-2">
               {skillGroup.name}
             </div>
             <div className="space-y-2">
@@ -164,7 +164,7 @@ const SkillCell = ({
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <div className="text-sm font-bold text-slate-800">
+                      <div className="text-sm font-black tracking-tight text-white uppercase">
                         {skill.name}
                       </div>
                       {selectedCharacter && isRandom && (
@@ -182,14 +182,14 @@ const SkillCell = ({
                         />
                       )}
                     </div>
-                    <div className="text-xs text-slate-600 leading-relaxed">
+                    <div className="text-sm text-slate-400 leading-relaxed font-normal">
                       {skill.value}
                     </div>
                   </div>
                 );
               })}
               {skillGroup.skills.length === 0 && (
-                <div className="text-xs text-slate-300 italic">
+                <div className="text-sm text-slate-300 italic">
                   暂无可用技能
                 </div>
               )}
@@ -250,13 +250,13 @@ export default function XinmaoTable({
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-[#0f1115] border-b border-[#404040]">
-              <th className="px-6 py-5 text-[10px] font-black text-[#d4af37] uppercase tracking-[0.2em]">
+              <th className="px-6 py-6 text-sm font-black text-[#d4af37] uppercase tracking-[0.2em]">
                 名称
               </th>
-              <th className="px-6 py-5 text-[10px] font-black text-[#d4af37] uppercase tracking-[0.2em]">
+              <th className="px-6 py-6 text-sm font-black text-[#d4af37] uppercase tracking-[0.2em]">
                 来源与属性
               </th>
-              <th className="px-6 py-5 text-[10px] font-black text-[#d4af37] uppercase tracking-[0.2em]">
+              <th className="px-6 py-6 text-sm font-black text-[#d4af37] uppercase tracking-[0.2em]">
                 技能
               </th>
             </tr>
@@ -280,7 +280,7 @@ export default function XinmaoTable({
                         {selectedCharacter && (
                           <button
                             onClick={() => onMark('attribute', item.name, 'ITEM_MARK', itemMarked ? 'none' : 'required' as any)}
-                            className={`absolute -top-1.5 -right-1.5 w-5 h-5 border-2 border-[#1a1d23] text-[9px] flex items-center justify-center font-black ${
+                            className={`absolute -top-1.5 -right-1.5 w-6 h-6 border-2 border-[#1a1d23] text-sm flex items-center justify-center font-black ${
                               itemMarked ? 'bg-black text-[#d4af37]' : 'bg-slate-700 text-slate-400'
                             }`}
                             title="标记此心锚"
@@ -289,7 +289,7 @@ export default function XinmaoTable({
                           </button>
                         )}
                       </div>
-                      <span className={`text-lg font-black tracking-tight uppercase ${itemMarked ? 'text-[#d4af37]' : 'text-white'}`}>
+                      <span className={`text-xl font-black tracking-tight uppercase ${itemMarked ? 'text-[#d4af37]' : 'text-white'}`}>
                         {item.name}
                       </span>
                     </div>

@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Users, Database } from 'lucide-react';
+import { Users, Database, Crosshair } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import CharactersPage from './pages/CharactersPage';
 import XinmaoPage from './pages/XinmaoPage';
+import XinmaoMatchPage from './pages/XinmaoMatchPage';
 
 function cn(...inputs: any[]) {
   return twMerge(clsx(inputs));
@@ -15,6 +16,7 @@ const Navbar = () => {
   const navItems = [
     { path: '/', name: '角色档案', icon: Users },
     { path: '/xinmao', name: '心锚数据库', icon: Database },
+    { path: '/match', name: '心锚匹配', icon: Crosshair },
   ];
 
   return (
@@ -34,8 +36,8 @@ const Navbar = () => {
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               )}
             >
-              <Icon className={cn("w-4 h-4 transition-transform group-hover:scale-110", isActive ? "text-[#d4af37]" : "text-slate-500")} />
-              <span className="text-sm font-black tracking-widest uppercase">{item.name}</span>
+              <Icon className={cn("w-5 h-5 transition-transform group-hover:scale-110", isActive ? "text-[#d4af37]" : "text-slate-500")} />
+              <span className="text-base font-black tracking-widest uppercase">{item.name}</span>
               
               {/* Gold indicator line */}
               {isActive && (
@@ -60,7 +62,7 @@ const Navbar = () => {
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-[#f8fafc] pb-24">
+      <div className="min-h-screen bg-[#0f1115] pb-24 text-[#e2e8f0]">
         <div className="pt-8">
           <Navbar />
         </div>
@@ -68,6 +70,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<CharactersPage />} />
           <Route path="/xinmao" element={<XinmaoPage />} />
+          <Route path="/match" element={<XinmaoMatchPage />} />
         </Routes>
 
         {/* Footer */}
