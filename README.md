@@ -1,73 +1,55 @@
-# React + TypeScript + Vite
+# 异象回声通用工具
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一个为《异象回声》设计的角色与心锚（装备）管理工具。采用战术工业风格设计，提供角色信息查询、心锚方案标记以及智能匹配功能。
 
-Currently, two official plugins are available:
+## 核心功能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 1. 角色档案 (Characters)
 
-## React Compiler
+- 查看全角色列表，支持按名称、星级、职业进行筛选。
+- 快速了解角色定位与功能标签。
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 2. 心锚数据库 (Database)
 
-## Expanding the ESLint configuration
+- **标记方案**：在此选择特定角色，并为该角色定义所需的心锚及词条。
+- **标记规则**：
+  - **推荐心锚**：在心锚名称行点击左侧图标可标记及取消。
+  - **需求等级**：
+    - **必须 (Required)**：该角色极其依赖此项，匹配时将作为核心条件。
+    - **优先 (Priority)**：该角色较为需要此项，匹配时作为辅助参考。
+    - **无 (None)**：清除标记。
+- **数据管理**：通过右上角“数据管理”面板，支持 JSON 导出/导入、剪贴板复制预览，方便跨设备同步。数据完全本地化存储（localStorage）。
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 3. 心锚匹配 (Matcher)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **方案模拟**：在“心锚构建器”中配置你获得的心锚参数（支持固定词条满值勾选、随机词条及其满值状态切换、特性选择）。
+- **实时结果**：系统自动计算当前配置的最佳适配干员，并按优先级（必须 > 优先 > 通用）排序显示。
+- **PERFECT 提示**：当词条满足“必须”需求且恰好为“满值”状态时，会触发金色 PERFECT 动效。
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 操作指南
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. **预设需求**：首先前往 **心锚数据库**，为你常用的干员标记理想的词条组合。这些标记将成为后续匹配的基准。
+2. **构建匹配**：获得极品心锚或面对复杂选择时，转到 **心锚匹配** 页面输入参数。
+3. **决策分配**：根据匹配结果的“必须匹配”与“优先匹配”提示，将心锚分配给最需要的干员。
+
+---
+
+## 开发与运行
+
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+
+# 构建生产版
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 技术架构
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **核心**：React 18 + TypeScript + Vite
+- **样式**：Tailwind CSS + 战术工业风定制 UI
+- **图标/动画**：Lucide React / Framer Motion
+- **数据存储**：完全基于 `localStorage` 的本地持久化
