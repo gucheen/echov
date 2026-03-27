@@ -139,6 +139,29 @@ export default function XinmaoMatchPage() {
         }
       });
 
+      // Check fixed attributes
+      selectedItem.attributes.forEach((attrGroup: Attribute) => {
+        if (attrGroup.name.includes("固定词条") && attrGroup.attrs) {
+          attrGroup.attrs.forEach((attr) => {
+            const key = `${selectedItem.name}-${attr.name}`;
+            const level = charMarkings.attributes?.[key];
+            if (level === "required") {
+              matchType = "must";
+              matchedReasons.push({
+                text: `必须词条 (固定): ${attr.name}`,
+                isMaxMust: false,
+              });
+            } else if (level === "priority" && matchType !== "must") {
+              matchType = "priority";
+              matchedReasons.push({
+                text: `优先词条 (固定): ${attr.name}`,
+                isMaxMust: false,
+              });
+            }
+          });
+        }
+      });
+
       // Check skills
       Object.values(selectedSkills).forEach((skillName) => {
         const key = `${selectedItem.name}-${skillName}`;

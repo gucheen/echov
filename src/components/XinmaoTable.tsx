@@ -79,7 +79,7 @@ const AttributeCell = ({
   return (
     <div className="space-y-2">
       {attributes.map((attr, i) => {
-        const isRandom = attr.name.includes("随机词条");
+        const isMarkable = attr.name.includes("随机词条") || attr.name.includes("固定词条");
         return (
           <div key={i} className="text-sm">
             <span className="font-bold text-slate-300 text-sm">{attr.name}: </span>
@@ -98,7 +98,7 @@ const AttributeCell = ({
                       }`}
                     >
                       <div className="flex items-center gap-2">
-                        {selectedCharacter && isRandom && (
+                        {selectedCharacter && isMarkable && (
                           <MarkingButton 
                             level={currentLevel}
                             title={`标记 ${subAttr.name} 为必须或优先`}
