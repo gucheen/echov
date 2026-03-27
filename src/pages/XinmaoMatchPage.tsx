@@ -37,6 +37,8 @@ export default function XinmaoMatchPage() {
   const [selectedSkills, setSelectedSkills] = useState<Record<string, string>>(
     {},
   );
+  const [selectedFixedAttrs, setSelectedFixedAttrs] = useState<Record<string, boolean>>({});
+  const [selectedFixedSkills, setSelectedFixedSkills] = useState<Record<string, boolean>>({});
   const [allMarkings, setAllMarkings] = useState<Record<string, any>>({});
 
   // Load markings from localStorage
@@ -71,6 +73,16 @@ export default function XinmaoMatchPage() {
     [selectedItem],
   );
 
+  const fixedAttrGroups = useMemo(
+    () => selectedItem.attributes.filter((a: Attribute) => a.name.includes("固定词条")),
+    [selectedItem],
+  );
+
+  const fixedSkillGroups = useMemo(
+    () => selectedItem.skills.filter((s: Skill) => s.name.includes("固定特性")),
+    [selectedItem],
+  );
+
   // Initialize selections when item changes
   useEffect(() => {
     const initialAttrs: Record<string, { attrName: string; isMax: boolean }> =
@@ -92,7 +104,23 @@ export default function XinmaoMatchPage() {
       }
     });
     setSelectedSkills(initialSkills);
-  }, [selectedItem, randomAttrGroups, randomSkillGroups]);
+
+    const initialFixedAttrs: Record<string, boolean> = {};
+    fixedAttrGroups.forEach((group: Attribute) => {
+      group.attrs?.forEach(attr => {
+        initialFixedAttrs[attr.name] = true;
+      });
+    });
+    setSelectedFixedAttrs(initialFixedAttrs);
+
+    const initialFixedSkills: Record<string, boolean> = {};
+    fixedSkillGroups.forEach((group: Skill) => {
+      group.skills.forEach(skill => {
+        initialFixedSkills[skill.name] = true;
+      });
+    });
+    setSelectedFixedSkills(initialFixedSkills);
+  }, [selectedItem, randomAttrGroups, randomSkillGroups, fixedAttrGroups, fixedSkillGroups]);
 
   // Matching Logic
   const matchingCharacters = useMemo(() => {
@@ -140,9 +168,10 @@ export default function XinmaoMatchPage() {
       });
 
       // Check fixed attributes
-      selectedItem.attributes.forEach((attrGroup: Attribute) => {
-        if (attrGroup.name.includes("固定词条") && attrGroup.attrs) {
+      fixedAttrGroups.forEach((attrGroup: Attribute) => {
+        if (attrGroup.attrs) {
           attrGroup.attrs.forEach((attr) => {
+            if (!selectedFixedAttrs[attr.name]) return;
             const key = `${selectedItem.name}-${attr.name}`;
             const level = charMarkings.attributes?.[key];
             if (level === "required") {
@@ -160,6 +189,28 @@ export default function XinmaoMatchPage() {
             }
           });
         }
+      });
+
+      // Check fixed skills
+      fixedSkillGroups.forEach((skillGroup: Skill) => {
+        skillGroup.skills.forEach((skill) => {
+          if (!selectedFixedSkills[skill.name]) return;
+          const key = `${selectedItem.name}-${skill.name}`;
+          const level = charMarkings.skills?.[key];
+          if (level === "required") {
+            matchType = "must";
+            matchedReasons.push({
+              text: `必须特性 (固定): ${skill.name}`,
+              isMaxMust: false,
+            });
+          } else if (level === "priority" && matchType !== "must") {
+            matchType = "priority";
+            matchedReasons.push({
+              text: `优先特性 (固定): ${skill.name}`,
+              isMaxMust: false,
+            });
+          }
+        });
       });
 
       // Check skills
@@ -346,6 +397,107 @@ export default function XinmaoMatchPage() {
                         }
                       </p>
                     )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Fixed Attributes Selection */}
+            {fixedAttrGroups.length > 0 && (
+              <div className="space-y-4 pt-4 border-t border-white/5">
+                <h3 className="text-sm font-black text-[#d4af37] uppercase tracking-widest">
+                  配置固定词条
+                </h3>
+                {fixedAttrGroups.map((group: Attribute) => (
+                  <div
+                    key={group.name}
+                    className="space-y-3 p-4 bg-black/20 border border-white/5"
+                  >
+                    {group.attrs?.map((attr) => (
+                      <div key={attr.name} className="flex justify-between items-center">
+                        <span className="text-sm font-bold text-slate-400">
+                          {attr.name} ({attr.value})
+                        </span>
+                        <label className="flex items-center gap-3 cursor-pointer group">
+                          <span
+                            className={`text-sm font-black uppercase transition-colors ${selectedFixedAttrs[attr.name] ? "text-[#d4af37]" : "text-slate-600"}`}
+                          >
+                            满足
+                          </span>
+                          <input
+                            type="checkbox"
+                            className="hidden"
+                            checked={selectedFixedAttrs[attr.name] || false}
+                            onChange={(e) =>
+                              setSelectedFixedAttrs((prev) => ({
+                                ...prev,
+                                [attr.name]: e.target.checked,
+                              }))
+                            }
+                          />
+                          <div
+                            className={`w-8 h-4 border transition-all ${selectedFixedAttrs[attr.name] ? "border-[#d4af37] bg-[#d4af37]/20" : "border-slate-700 bg-slate-900"}`}
+                          >
+                            <div
+                              className={`h-full w-3 transition-all ${selectedFixedAttrs[attr.name] ? "translate-x-4 bg-[#d4af37]" : "translate-x-0 bg-slate-600"}`}
+                            />
+                          </div>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Fixed Skills Selection */}
+            {fixedSkillGroups.length > 0 && (
+              <div className="space-y-4 pt-4 border-t border-white/5">
+                <h3 className="text-sm font-black text-[#d4af37] uppercase tracking-widest">
+                  配置固定特性
+                </h3>
+                {fixedSkillGroups.map((group: Skill) => (
+                  <div
+                    key={group.name}
+                    className="space-y-3 p-4 bg-black/20 border border-white/5"
+                  >
+                    {group.skills.map((skill) => (
+                      <div key={skill.name} className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm font-bold text-slate-400">
+                            {skill.name}
+                          </span>
+                          <label className="flex items-center gap-3 cursor-pointer group">
+                            <span
+                              className={`text-sm font-black uppercase transition-colors ${selectedFixedSkills[skill.name] ? "text-[#d4af37]" : "text-slate-600"}`}
+                            >
+                              满足
+                            </span>
+                            <input
+                              type="checkbox"
+                              className="hidden"
+                              checked={selectedFixedSkills[skill.name] || false}
+                              onChange={(e) =>
+                                setSelectedFixedSkills((prev) => ({
+                                  ...prev,
+                                  [skill.name]: e.target.checked,
+                                }))
+                              }
+                            />
+                            <div
+                              className={`w-8 h-4 border transition-all ${selectedFixedSkills[skill.name] ? "border-[#d4af37] bg-[#d4af37]/20" : "border-slate-700 bg-slate-900"}`}
+                            >
+                              <div
+                                className={`h-full w-3 transition-all ${selectedFixedSkills[skill.name] ? "translate-x-4 bg-[#d4af37]" : "translate-x-0 bg-slate-600"}`}
+                              />
+                            </div>
+                          </label>
+                        </div>
+                        <p className="text-sm text-slate-500 italic leading-relaxed">
+                          {skill.value}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
