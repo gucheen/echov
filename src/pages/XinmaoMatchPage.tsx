@@ -40,9 +40,7 @@ export default function XinmaoMatchPage() {
   const [selectedFixedAttrs, setSelectedFixedAttrs] = useState<
     Record<string, boolean>
   >({});
-  const [selectedFixedSkills, setSelectedFixedSkills] = useState<
-    Record<string, boolean>
-  >({});
+
   const [allMarkings, setAllMarkings] = useState<Record<string, any>>({});
 
   // Load markings from localStorage
@@ -119,13 +117,7 @@ export default function XinmaoMatchPage() {
       });
     });
     setSelectedFixedAttrs(initialFixedAttrs);
-  }, [
-    selectedItem,
-    randomAttrGroups,
-    randomSkillGroups,
-    fixedAttrGroups,
-    fixedSkillGroups,
-  ]);
+  }, [selectedItem, randomAttrGroups, randomSkillGroups, fixedAttrGroups]);
 
   // Matching Logic
   const matchingCharacters = useMemo(() => {
@@ -194,28 +186,6 @@ export default function XinmaoMatchPage() {
             }
           });
         }
-      });
-
-      // Check fixed skills
-      fixedSkillGroups.forEach((skillGroup: Skill) => {
-        skillGroup.skills.forEach((skill) => {
-          if (!selectedFixedSkills[skill.name]) return;
-          const key = `${selectedItem.name}-${skill.name}`;
-          const level = charMarkings.skills?.[key];
-          if (level === "required") {
-            matchType = "must";
-            matchedReasons.push({
-              text: `必须特性 (固定): ${skill.name}`,
-              isMaxMust: false,
-            });
-          } else if (level === "priority" && matchType !== "must") {
-            matchType = "priority";
-            matchedReasons.push({
-              text: `优先特性 (固定): ${skill.name}`,
-              isMaxMust: false,
-            });
-          }
-        });
       });
 
       // Check skills
