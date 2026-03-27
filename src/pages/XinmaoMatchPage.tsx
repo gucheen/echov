@@ -37,8 +37,12 @@ export default function XinmaoMatchPage() {
   const [selectedSkills, setSelectedSkills] = useState<Record<string, string>>(
     {},
   );
-  const [selectedFixedAttrs, setSelectedFixedAttrs] = useState<Record<string, boolean>>({});
-  const [selectedFixedSkills, setSelectedFixedSkills] = useState<Record<string, boolean>>({});
+  const [selectedFixedAttrs, setSelectedFixedAttrs] = useState<
+    Record<string, boolean>
+  >({});
+  const [selectedFixedSkills, setSelectedFixedSkills] = useState<
+    Record<string, boolean>
+  >({});
   const [allMarkings, setAllMarkings] = useState<Record<string, any>>({});
 
   // Load markings from localStorage
@@ -74,7 +78,10 @@ export default function XinmaoMatchPage() {
   );
 
   const fixedAttrGroups = useMemo(
-    () => selectedItem.attributes.filter((a: Attribute) => a.name.includes("固定词条")),
+    () =>
+      selectedItem.attributes.filter((a: Attribute) =>
+        a.name.includes("固定词条"),
+      ),
     [selectedItem],
   );
 
@@ -107,7 +114,7 @@ export default function XinmaoMatchPage() {
 
     const initialFixedAttrs: Record<string, boolean> = {};
     fixedAttrGroups.forEach((group: Attribute) => {
-      group.attrs?.forEach(attr => {
+      group.attrs?.forEach((attr) => {
         initialFixedAttrs[attr.name] = true;
       });
     });
@@ -115,12 +122,18 @@ export default function XinmaoMatchPage() {
 
     const initialFixedSkills: Record<string, boolean> = {};
     fixedSkillGroups.forEach((group: Skill) => {
-      group.skills.forEach(skill => {
+      group.skills.forEach((skill) => {
         initialFixedSkills[skill.name] = true;
       });
     });
     setSelectedFixedSkills(initialFixedSkills);
-  }, [selectedItem, randomAttrGroups, randomSkillGroups, fixedAttrGroups, fixedSkillGroups]);
+  }, [
+    selectedItem,
+    randomAttrGroups,
+    randomSkillGroups,
+    fixedAttrGroups,
+    fixedSkillGroups,
+  ]);
 
   // Matching Logic
   const matchingCharacters = useMemo(() => {
@@ -414,7 +427,10 @@ export default function XinmaoMatchPage() {
                     className="space-y-3 p-4 bg-black/20 border border-white/5"
                   >
                     {group.attrs?.map((attr) => (
-                      <div key={attr.name} className="flex justify-between items-center">
+                      <div
+                        key={attr.name}
+                        className="flex justify-between items-center"
+                      >
                         <span className="text-sm font-bold text-slate-400">
                           {attr.name} ({attr.value})
                         </span>
@@ -422,7 +438,7 @@ export default function XinmaoMatchPage() {
                           <span
                             className={`text-sm font-black uppercase transition-colors ${selectedFixedAttrs[attr.name] ? "text-[#d4af37]" : "text-slate-600"}`}
                           >
-                            满足
+                            满值
                           </span>
                           <input
                             type="checkbox"
@@ -471,7 +487,7 @@ export default function XinmaoMatchPage() {
                             <span
                               className={`text-sm font-black uppercase transition-colors ${selectedFixedSkills[skill.name] ? "text-[#d4af37]" : "text-slate-600"}`}
                             >
-                              满足
+                              满值
                             </span>
                             <input
                               type="checkbox"
